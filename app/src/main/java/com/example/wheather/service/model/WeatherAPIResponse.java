@@ -1,6 +1,6 @@
 package com.example.wheather.service.model;
 
-public class WeatherResponseModel {
+public class WeatherAPIResponse {
 
     private String cod;
     private int message;

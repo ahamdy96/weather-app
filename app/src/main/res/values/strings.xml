@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Wheather</string>
+    <string name="empty_percentage_value">...%</string>
+    <string name="empty_speed_value">...m/s</string>
+    <string name="empty_value">...</string>
+    <string name="empty_temp_value">...°</string>
+    <string name="loading_text">Getting your location...</string>
 </resources>

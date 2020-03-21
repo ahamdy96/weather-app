@@ -3,12 +3,12 @@ package com.example.wheather.service.model;
 public class Main {
 
     private double temp;
-    private double feelsLike;
-    private double tempMin;
-    private double tempMax;
+    private double feels_like;
+    private double temp_min;
+    private double temp_max;
     private int pressure;
-    private int seaLevel;
-    private int grndLevel;
+    private int sea_level;
+    private int grnd_level;
     private int humidity;
     private int tempKf;
 
@@ -20,28 +20,28 @@ public class Main {
         this.temp = temp;
     }
 
-    public double getFeelsLike() {
-        return feelsLike;
+    public double getFeels_like() {
+        return feels_like;
     }
 
-    public void setFeelsLike(double feelsLike) {
-        this.feelsLike = feelsLike;
+    public void setFeels_like(double feels_like) {
+        this.feels_like = feels_like;
     }
 
-    public double getTempMin() {
-        return tempMin;
+    public double getTemp_min() {
+        return temp_min;
     }
 
-    public void setTempMin(double tempMin) {
-        this.tempMin = tempMin;
+    public void setTemp_min(double temp_min) {
+        this.temp_min = temp_min;
     }
 
-    public double getTempMax() {
-        return tempMax;
+    public double getTemp_max() {
+        return temp_max;
     }
 
-    public void setTempMax(double tempMax) {
-        this.tempMax = tempMax;
+    public void setTemp_max(double temp_max) {
+        this.temp_max = temp_max;
     }
 
     public int getPressure() {
@@ -52,20 +52,20 @@ public class Main {
         this.pressure = pressure;
     }
 
-    public int getSeaLevel() {
-        return seaLevel;
+    public int getSea_level() {
+        return sea_level;
     }
 
-    public void setSeaLevel(int seaLevel) {
-        this.seaLevel = seaLevel;
+    public void setSea_level(int sea_level) {
+        this.sea_level = sea_level;
     }
 
-    public int getGrndLevel() {
-        return grndLevel;
+    public int getGrnd_level() {
+        return grnd_level;
     }
 
-    public void setGrndLevel(int grndLevel) {
-        this.grndLevel = grndLevel;
+    public void setGrnd_level(int grnd_level) {
+        this.grnd_level = grnd_level;
     }
 
     public int getHumidity() {

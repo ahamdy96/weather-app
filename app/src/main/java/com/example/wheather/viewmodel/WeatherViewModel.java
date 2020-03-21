@@ -1,38 +1,36 @@
 package com.example.wheather.viewmodel;
 
-import android.app.Application;
+import android.location.Location;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.wheather.service.model.WeatherResponseModel;
-import com.example.wheather.service.repository.ProjectRepository;
+import com.example.wheather.service.model.WeatherAPIResponse;
+import com.example.wheather.service.repository.WeatherRepository;
 
 public class WeatherViewModel extends ViewModel {
-    private LiveData<WeatherResponseModel> data;
+    private LiveData<WeatherAPIResponse> data;
 
-    public WeatherViewModel(/*@NonNull Application application*/) {
-        data = ProjectRepository.getInstance().getWeather();
-        //        super(application);
+    public WeatherViewModel(Location location) {
+        data = WeatherRepository.getInstance().getWeatherWithGeoLocation(location);
     }
 
-    public LiveData<WeatherResponseModel> getObservableWeather() {
+    public LiveData<WeatherAPIResponse> getObservableWeather() {
         return data;
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
+        private Location location;
 
-
-        public Factory() {
+        public Factory(Location location) {
+            this.location = location;
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new WeatherViewModel();
+            return (T) new WeatherViewModel(location);
         }
     }
 }

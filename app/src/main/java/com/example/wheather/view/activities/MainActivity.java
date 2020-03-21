@@ -7,25 +7,27 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wheather.R;
+import com.example.wheather.databinding.ActivityMainBinding;
 import com.example.wheather.service.model.Temperature;
+import com.example.wheather.service.model.WeatherAPIResponse;
+import com.example.wheather.viewmodel.LocationViewModel;
+import com.example.wheather.viewmodel.WeatherViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -36,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private ArrayList<Temperature> weatherList;
     private FusedLocationProviderClient fusedLocationClient;
-    private LocationCallback mLocationCallback = new LocationCallback() {
+    private WeatherViewModel weatherViewModel;
+    private WeatherViewModel.Factory weatherViewModelFactory;
+    private LocationViewModel locationViewModel;
+    private ActivityMainBinding binding;
+
+    private LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location lastLocation = locationResult.getLastLocation();
@@ -51,10 +58,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        getLastLocation();
-
+        checkPermissions();
 /*
         weatherList = new ArrayList<Temperature>();
 
@@ -66,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
         final WeatherViewModel.Factory factory = new WeatherViewModel.Factory();
         final WeatherViewModel weatherViewModel = new ViewModelProvider(this, factory).get(WeatherViewModel.class);
 
-        weatherViewModel.getObservableWeather().observe(this, new Observer<WeatherResponseModel>() {
+        weatherViewModel.getObservableWeather().observe(this, new Observer<WeatherAPIResponse>() {
             @Override
-            public void onChanged(WeatherResponseModel weatherResponseModel) {
+            public void onChanged(WeatherAPIResponse weatherResponseModel) {
                 Toast.makeText(getApplicationContext(), weatherResponseModel.getList().get(0).getWeather().get(0).getDescription(), Toast.LENGTH_LONG).show();
 
                 for (int i = 0; i < weatherResponseModel.getList().size(); i++) {
@@ -107,12 +113,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkPermissions() {
+    private void checkPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
+            if (isLocationEnabled()) {
+                getLastLocation();
+            } else {
+                Toast.makeText(getApplicationContext(), "Turn on location", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        } else {
+            requestPermissions();
         }
-        return false;
     }
 
     private void requestPermissions() {
@@ -132,60 +145,72 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void getLastLocation() {
+        locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
+        locationViewModel.getObservableLocation().observe(this, new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                Toast.makeText(getApplicationContext(),
+                        "location is " + location.getLatitude() + " lat " + location.getLongitude() + " lng",
+                        Toast.LENGTH_LONG)
+                        .show();
+                binding.tvLoading.setText("Getting weather info...");
+                getWeatherInfo(location);
+            }
+        });
+    }
+
+    private void getWeatherInfo(Location location) {
+
+        weatherViewModelFactory = new WeatherViewModel.Factory(location);
+        weatherViewModel = new ViewModelProvider(this, weatherViewModelFactory).get(WeatherViewModel.class);
+        weatherViewModel.getObservableWeather().observe(this, new Observer<WeatherAPIResponse>() {
+            @Override
+            public void onChanged(WeatherAPIResponse weatherResponseModel) {
+                if (weatherResponseModel == null) {
+                    Toast.makeText(getApplicationContext(), "failed to get weather info", Toast.LENGTH_LONG).show();
+                } else {
+                    String city = weatherResponseModel.getCity().getName();
+                    String country = weatherResponseModel.getCity().getCountry();
+                    String weatherDescription = weatherResponseModel.getList().get(0).getWeather().get(0).getDescription();
+                    int clouds = weatherResponseModel.getList().get(0).getClouds().getAll();
+                    double wind = weatherResponseModel.getList().get(0).getWind().getSpeed();
+                    int humidity = weatherResponseModel.getList().get(0).getMain().getHumidity();
+                    long temp = Math.round(weatherResponseModel.getList().get(0).getMain().getTemp());
+                    long tempHigh = Math.round(weatherResponseModel.getList().get(0).getMain().getTemp_max());
+                    long tempLow = Math.round(weatherResponseModel.getList().get(0).getMain().getTemp_min());
+                    /*Toast.makeText(getApplicationContext(), weatherResponseModel.getCity().getName(), Toast.LENGTH_LONG).show();*/
+
+                    binding.tvLocation.setText(city + ", " + country);
+                    binding.tvCloud.setText(clouds + "%");
+                    binding.tvWind.setText(wind + "m/s");
+                    binding.tvHumidity.setText(humidity + "%");
+                    binding.tvWeatherDescription.setText(weatherDescription);
+                    binding.tvTemp.setText(String.valueOf(temp));
+                    binding.tvTempHigh.setText(String.valueOf(tempHigh));
+                    binding.tvTempLow.setText(String.valueOf(tempLow));
+                }
+
+                binding.linearLayoutLoading.setVisibility(View.INVISIBLE);
+                /*for (int i = 0; i < weatherResponseModel.getList().size(); i++) {
+                    double temp = weatherResponseModel.getList().get(i).getMain().getTemp();
+                    double minTemp = weatherResponseModel.getList().get(i).getMain().getTempMin();
+                    double maxTemp = weatherResponseModel.getList().get(i).getMain().getTempMax();
+
+                    Temperature t = new Temperature(temp, minTemp, maxTemp);
+                    weatherList.add(t);
+                }
+
+                adapter.updateRecyclerView();*/
+            }
+        });
+    }
+
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
                 LocationManager.NETWORK_PROVIDER
         );
-    }
-
-    private void getLastLocation() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                fusedLocationClient.getLastLocation().addOnCompleteListener(
-                        new OnCompleteListener<Location>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Location> task) {
-                                Location location = task.getResult();
-                                if (location == null) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "Requesting new data ...",
-                                            Toast.LENGTH_LONG)
-                                            .show();
-                                    requestNewLocationData();
-                                } else {
-                                    Toast.makeText(getApplicationContext(),
-                                            "location is " + location.getLatitude() + " lat " + location.getLongitude() + " lng",
-                                            Toast.LENGTH_LONG)
-                                            .show();
-                                }
-                            }
-                        }
-                );
-            } else {
-                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        } else {
-            requestPermissions();
-        }
-    }
-
-    private void requestNewLocationData() {
-
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(0);
-        mLocationRequest.setFastestInterval(0);
-        mLocationRequest.setNumUpdates(1);
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationClient.requestLocationUpdates(
-                mLocationRequest, mLocationCallback,
-                Looper.myLooper()
-        );
-
     }
 
 }

@@ -1,272 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.activities.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
 
     <FrameLayout
-        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/morning">
+        android:animateLayoutChanges="true"
+        android:background="@color/colorWhite">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:context=".view.activities.MainActivity">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linearLayoutWeatherStatistics"
+            <FrameLayout
+                android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/weather_cloudy"
-                    android:tint="@color/colorAccent"
-                    android:tintMode="src_in" />
-
-                <TextView
-                    android:id="@+id/tv_cloud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:text="100%"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/weather_windy"
-                    android:tint="@color/colorAccent"
-                    android:tintMode="src_in" />
-
-                <TextView
-                    android:id="@+id/tv_wind"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:text="100%"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/water"
-                    android:tint="@color/colorAccent"
-                    android:tintMode="src_in" />
-
-                <TextView
-                    android:id="@+id/tv_humidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="100%"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linearLayoutWeatherTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutWeatherStatistics">
-
-                <TextView
-                    android:id="@+id/tv_temp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="23"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="128dp" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="°C"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="32dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_temp_high"
-                        android:drawablePadding="4dp"
-                        android:drawableTint="@color/colorAccent"
-                        android:includeFontPadding="false"
-                        android:text="23°"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="24dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_temp_low"
-                        android:drawablePadding="4dp"
-                        android:drawableTint="@color/colorAccent"
-                        android:includeFontPadding="false"
-                        android:text="23°"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="24dp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-
-                android:id="@+id/linearLayoutCompat"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:gravity="top|center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutWeatherTemp">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tv_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="8dp"
-                        android:text="LUXOR GOVERNORATE, EG"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="24dp" />
-
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_margin="8dp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/roundcorner"
-                        android:scaleType="center"
-                        android:src="@drawable/ic_edit"
-                        android:tint="@color/colorMain" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Clear sky"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="24dp" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@drawable/weather_cloudy"
-                    android:tint="@color/colorAccent"
-                    android:tintMode="src_in" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!--
-
-                <com.google.android.material.appbar.AppBarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.appbar.CollapsingToolbarLayout
-                        android:id="@+id/collapsingtoolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/AppTheme.CustomToolbarTheme"
-                        app:collapsedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                        app:expandedTitleGravity="top"
-                        app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                        app:title="Weather">
-
-                        <ImageView
-                            android:id="@+id/action_image"
-                            android:layout_width="wrap_content"
-                            android:layout_height="400dp"
-                            android:fitsSystemWindows="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/toolbar_image">
-
-                        </ImageView>
-
-                        <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="?attr/actionBarSize"
-                            app:layout_collapseMode="pin" />
-
-
-                    </com.google.android.material.appbar.CollapsingToolbarLayout>
-                </com.google.android.material.appbar.AppBarLayout>
+                android:layout_height="match_parent"
+                android:background="@drawable/morning">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                    android:layout_height="match_parent">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearLayoutWeatherStatistics"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="160dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/weather_cloudy"
+                            android:tint="@color/colorAccent"
+                            android:tintMode="src_in" />
 
+                        <TextView
+                            android:id="@+id/tv_cloud"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/empty_percentage_value"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/weather_windy"
+                            android:tint="@color/colorAccent"
+                            android:tintMode="src_in" />
+
+                        <TextView
+                            android:id="@+id/tv_wind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/empty_speed_value"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/water"
+                            android:tint="@color/colorAccent"
+                            android:tintMode="src_in" />
+
+                        <TextView
+                            android:id="@+id/tv_humidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/empty_percentage_value"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearLayoutWeatherTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayoutWeatherStatistics">
+
+                        <TextView
+                            android:id="@+id/tv_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/empty_value"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="128dp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="°C"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="32dp" />
+
+                            <TextView
+                                android:id="@+id/tv_temp_high"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_temp_high"
+                                android:drawablePadding="4dp"
+                                android:drawableTint="@color/colorAccent"
+                                android:includeFontPadding="false"
+                                android:text="@string/empty_temp_value"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="24dp" />
+
+                            <TextView
+                                android:id="@+id/tv_temp_low"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_temp_low"
+                                android:drawablePadding="4dp"
+                                android:drawableTint="@color/colorAccent"
+                                android:includeFontPadding="false"
+                                android:text="@string/empty_temp_value"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="24dp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+
+                        android:id="@+id/linearLayoutCompat"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:gravity="top|center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayoutWeatherTemp">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="8dp"
+                                android:text="@string/empty_value"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="24dp" />
+
+                            <androidx.appcompat.widget.AppCompatImageButton
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="8dp"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/roundcorner"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_edit"
+                                android:tint="@color/colorMain" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <TextView
+                            android:id="@+id/tv_weather_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_value"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="24dp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/weather_cloudy"
+                            android:tint="@color/colorAccent"
+                            android:tintMode="src_in" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-        -->
+
+                <!--
+
+                        <com.google.android.material.appbar.AppBarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.appbar.CollapsingToolbarLayout
+                                android:id="@+id/collapsingtoolbar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:theme="@style/AppTheme.CustomToolbarTheme"
+                                app:collapsedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                app:expandedTitleGravity="top"
+                                app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded"
+                                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                                app:title="Weather">
+
+                                <ImageView
+                                    android:id="@+id/action_image"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="400dp"
+                                    android:fitsSystemWindows="true"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/toolbar_image">
+
+                                </ImageView>
+
+                                <androidx.appcompat.widget.Toolbar
+                                    android:id="@+id/toolbar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="?attr/actionBarSize"
+                                    app:layout_collapseMode="pin" />
+
+
+                            </com.google.android.material.appbar.CollapsingToolbarLayout>
+                        </com.google.android.material.appbar.AppBarLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                -->
+
+            </FrameLayout>
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/colorWhite"
+                android:clickable="true"
+                android:focusable="true"
+                app:elevation="6dp"
+                app:fabSize="normal"
+                app:layout_anchor="@id/linearLayoutCompat"
+                app:layout_anchorGravity="bottom|end"
+                app:rippleColor="@color/colorAccent"
+                app:srcCompat="@drawable/ic_menu"
+                app:tint="@color/colorAccent">
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:animateLayoutChanges="true"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyleLargeInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true">
+
+            </androidx.core.widget.ContentLoadingProgressBar>
+
+            <TextView
+                android:id="@+id/tv_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="24dp"
+                android:text="@string/loading_text"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
 
     </FrameLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/colorWhite"
-        android:clickable="true"
-        app:elevation="6dp"
-        app:fabSize="normal"
-        app:layout_anchor="@id/linearLayoutCompat"
-        app:layout_anchorGravity="bottom|end"
-        app:rippleColor="@color/colorAccent"
-        app:srcCompat="@drawable/ic_menu"
-        app:tint="@color/colorAccent">
-
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
