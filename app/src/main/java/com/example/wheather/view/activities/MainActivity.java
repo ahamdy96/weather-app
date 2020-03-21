@@ -1,46 +1,61 @@
 package com.example.wheather.view.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.palette.graphics.Palette;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
+import android.os.Looper;
+import android.provider.Settings;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.wheather.R;
 import com.example.wheather.service.model.Temperature;
-import com.example.wheather.service.model.WeatherResponseModel;
-import com.example.wheather.view.adapters.RecyclerViewAdapter;
-import com.example.wheather.viewmodel.WeatherViewModel;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PERMISSION_ID = 100;
     private RecyclerView rv;
     private ImageView imageView;
     private ArrayList<Temperature> weatherList;
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location lastLocation = locationResult.getLastLocation();
+            Toast.makeText(getApplicationContext(),
+                    "location is " + lastLocation.getLatitude() + " lat " + lastLocation.getLongitude() + " lng",
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
+
+/*
         weatherList = new ArrayList<Temperature>();
 
         rv = findViewById(R.id.rv);
@@ -88,6 +103,89 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout.setScrimAnimationDuration(200);
         collapsingToolbarLayout.setCollapsedTitleTextColor(dominantSwatch != null ? (dominantSwatch.getTitleTextColor() | 0xff000000) : getResources().getColor(R.color.colorBlack));
         window.setStatusBarColor((dominantSwatch != null ? dominantSwatch.getRgb() : getResources().getColor(R.color.colorWhite)));
+*/
 
     }
+
+    private boolean checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        return false;
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSION_ID
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation();
+            }
+        }
+    }
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        );
+    }
+
+    private void getLastLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                fusedLocationClient.getLastLocation().addOnCompleteListener(
+                        new OnCompleteListener<Location>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Location> task) {
+                                Location location = task.getResult();
+                                if (location == null) {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Requesting new data ...",
+                                            Toast.LENGTH_LONG)
+                                            .show();
+                                    requestNewLocationData();
+                                } else {
+                                    Toast.makeText(getApplicationContext(),
+                                            "location is " + location.getLatitude() + " lat " + location.getLongitude() + " lng",
+                                            Toast.LENGTH_LONG)
+                                            .show();
+                                }
+                            }
+                        }
+                );
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        } else {
+            requestPermissions();
+        }
+    }
+
+    private void requestNewLocationData() {
+
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(0);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setNumUpdates(1);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.requestLocationUpdates(
+                mLocationRequest, mLocationCallback,
+                Looper.myLooper()
+        );
+
+    }
+
 }
