@@ -7,8 +7,10 @@
     -->
     <!--#0097A7-->
     <!--    <color name="colorPrimaryDark">#ABE7F1</color>-->
-    <color name="colorAccent">#5698AC</color>
-    <color name="colorMain">#A4DDE6</color>
+    <color name="colorAccentDay">#5698AC</color>
+    <color name="colorAccentNight">#E2F7FEFF</color>
+    <color name="colorMainDay">#A4DDE6</color>
+    <color name="colorMainNight">#4b5463</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorWhite">#E2F7FEFF</color>
     <!--<color name="colorBlack">#000</color>

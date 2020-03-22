@@ -8,6 +8,7 @@
     </data>
 
     <FrameLayout
+        android:id="@+id/frame_layout_app_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
@@ -19,7 +20,7 @@
             tools:context=".view.activities.MainActivity">
 
             <FrameLayout
-                android:id="@+id/frame_layout"
+                android:id="@+id/frame_layout_app_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/morning">
@@ -39,12 +40,13 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/img_cloud"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:layout_gravity="center"
                             android:layout_margin="8dp"
                             android:src="@drawable/weather_cloudy"
-                            android:tint="@color/colorAccent"
+                            android:tint="@color/colorAccentDay"
                             android:tintMode="src_in" />
 
                         <TextView
@@ -54,16 +56,17 @@
                             android:layout_gravity="center"
                             android:layout_marginEnd="8dp"
                             android:text="@string/empty_percentage_value"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorAccentDay"
                             android:textSize="16sp" />
 
                         <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/img_wind"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:layout_gravity="center"
                             android:layout_margin="8dp"
                             android:src="@drawable/weather_windy"
-                            android:tint="@color/colorAccent"
+                            android:tint="@color/colorAccentDay"
                             android:tintMode="src_in" />
 
                         <TextView
@@ -73,15 +76,16 @@
                             android:layout_gravity="center"
                             android:layout_marginEnd="8dp"
                             android:text="@string/empty_speed_value"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorAccentDay"
                             android:textSize="16sp" />
 
                         <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/img_humidity"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:layout_gravity="center"
                             android:src="@drawable/water"
-                            android:tint="@color/colorAccent"
+                            android:tint="@color/colorAccentDay"
                             android:tintMode="src_in" />
 
                         <TextView
@@ -90,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@string/empty_percentage_value"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorAccentDay"
                             android:textSize="16sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -111,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:text="@string/empty_value"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorAccentDay"
                             android:textSize="128dp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
@@ -122,11 +126,12 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_temp_degree"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:includeFontPadding="false"
                                 android:text="°C"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/colorAccentDay"
                                 android:textSize="32dp" />
 
                             <TextView
@@ -135,10 +140,11 @@
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/ic_temp_high"
                                 android:drawablePadding="4dp"
-                                android:drawableTint="@color/colorAccent"
+
+                                android:drawableTint="@color/colorAccentDay"
                                 android:includeFontPadding="false"
                                 android:text="@string/empty_temp_value"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/colorAccentDay"
                                 android:textSize="24dp" />
 
                             <TextView
@@ -147,10 +153,10 @@
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/ic_temp_low"
                                 android:drawablePadding="4dp"
-                                android:drawableTint="@color/colorAccent"
+                                android:drawableTint="@color/colorAccentDay"
                                 android:includeFontPadding="false"
                                 android:text="@string/empty_temp_value"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/colorAccentDay"
                                 android:textSize="24dp" />
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -180,10 +186,11 @@
                                 android:layout_height="wrap_content"
                                 android:paddingStart="8dp"
                                 android:text="@string/empty_value"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/colorAccentDay"
                                 android:textSize="24dp" />
 
                             <androidx.appcompat.widget.AppCompatImageButton
+                                android:id="@+id/img_btn_edit"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_margin="8dp"
@@ -191,7 +198,7 @@
                                 android:background="@drawable/roundcorner"
                                 android:scaleType="center"
                                 android:src="@drawable/ic_edit"
-                                android:tint="@color/colorMain" />
+                                android:tint="@color/colorMainDay" />
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <TextView
@@ -199,14 +206,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_value"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorAccentDay"
                             android:textSize="24dp" />
 
                         <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/img_weather_status"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
-                            android:src="@drawable/weather_cloudy"
-                            android:tint="@color/colorAccent"
+                            android:tint="@color/colorAccentDay"
                             android:tintMode="src_in" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -270,6 +277,7 @@
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_forecast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -280,9 +288,9 @@
                 app:fabSize="normal"
                 app:layout_anchor="@id/linearLayoutCompat"
                 app:layout_anchorGravity="bottom|end"
-                app:rippleColor="@color/colorAccent"
+                app:rippleColor="@color/colorAccentDay"
                 app:srcCompat="@drawable/ic_menu"
-                app:tint="@color/colorAccent">
+                app:tint="@color/colorAccentDay">
 
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
@@ -300,10 +308,12 @@
             android:orientation="vertical">
 
             <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/loading_bar"
                 style="?android:attr/progressBarStyleLargeInverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:indeterminate="true">
+                android:indeterminate="true"
+                android:indeterminateTint="@color/colorAccentDay">
 
             </androidx.core.widget.ContentLoadingProgressBar>
 
@@ -313,7 +323,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="24dp"
                 android:text="@string/loading_text"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccentDay" />
         </LinearLayout>
 
     </FrameLayout>

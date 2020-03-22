@@ -2,7 +2,7 @@ package com.example.wheather.service.repository;
 
 import android.location.Location;
 import android.os.Looper;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -28,10 +28,8 @@ public class LocationRepository {
         public void onLocationResult(LocationResult locationResult) {
             Location lastLocation = locationResult.getLastLocation();
             locationMutableLiveData.setValue(lastLocation);
-            Toast.makeText(getAppContext(),
-                    "location is " + lastLocation.getLatitude() + " lat " + lastLocation.getLongitude() + " lng",
-                    Toast.LENGTH_LONG)
-                    .show();
+            Log.d("LOCATION_INFO",
+                    "location is " + lastLocation.getLatitude() + " lat " + lastLocation.getLongitude() + " lng");
         }
     };
 
@@ -55,10 +53,7 @@ public class LocationRepository {
                     public void onComplete(@NonNull Task<Location> task) {
                         Location location = task.getResult();
                         if (location == null) {
-                            Toast.makeText(getAppContext(),
-                                    "Requesting new data ...",
-                                    Toast.LENGTH_LONG)
-                                    .show();
+                            Log.d("LOCATION_INFO", "Requesting new location data ...");
                             requestNewLocationData();
                         } else {
                             locationMutableLiveData.setValue(location);

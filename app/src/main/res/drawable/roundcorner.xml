@@ -3,7 +3,7 @@
     android:color="@color/colorPrimary">
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/colorAccent" />
+            <solid android:color="@color/colorAccentDay" />
             <corners android:radius="32dp" />
         </shape>
     </item>
