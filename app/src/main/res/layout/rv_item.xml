@@ -1,43 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:layout_margin="8dp"
-    android:minHeight="200dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
-            android:scaleType="centerCrop"
-            android:scaleX="2"
-            android:scaleY="2"
-            android:src="@drawable/weather_partly_cloudy"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        </ImageView>
 
-        <TextView
-            android:id="@+id/tv_item_weather"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="37 C"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/tv_item_weather_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="37°C"
+                android:textColor="@color/colorAccentDay"
+                android:textSize="16dp" />
 
-        </TextView>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linear_layout_item_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingEnd="16dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_item_temp_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_temp_high"
+                    android:drawablePadding="4dp"
+                    android:drawableTint="@color/colorAccentDay"
+                    android:includeFontPadding="false"
+                    android:text="@string/empty_temp_value"
+                    android:textColor="@color/colorAccentDay"
+                    android:textSize="8dp" />
 
-</androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/tv_item_temp_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_temp_low"
+                    android:drawablePadding="4dp"
+                    android:drawableTint="@color/colorAccentDay"
+                    android:includeFontPadding="false"
+                    android:text="@string/empty_temp_value"
+                    android:textColor="@color/colorAccentDay"
+                    android:textSize="8dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="Clear Sky"
+                android:textColor="@color/colorAccentDay"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/img_item_weather_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:src="@drawable/weather_partly_cloudy"
+                android:tint="@color/colorAccentDay" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+</layout>
